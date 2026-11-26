@@ -1,0 +1,32 @@
+[PARTS]
+  core.100
+  bob.100
+[MAIN]
+  MAP Land$English_Channel_1940
+  TIME 10
+  WeatherIndex 3
+  player BoB_RAF_F_32Sqn_Early.110
+[GlobalWind_0]
+  Power 3.000 0.000 0.000
+  BottomBound 0.00
+  TopBound 1500.00
+  GustPower 0
+  GustAngle 45
+[AirGroups]
+  BoB_RAF_F_32Sqn_Early.12
+[BoB_RAF_F_32Sqn_Early.12]
+  Flight1 P
+  Class Aircraft.HurricaneMkI
+  Formation VIC3
+  CallSign 14
+  Fuel 100
+  Weapons 1
+  Skill 1 0.90 1 1 0.20 1 1 0.93
+  Serial10 P7370
+[BoB_RAF_F_32Sqn_Early.12_Way]
+  NORMFLY 234640 232170 340 270
+  NORMFLY 235810 232480 340 270
+  NORMFLY 236040 233230 420 270
+  NORMFLY 234640 232170 420 270
+[StaticCamera]
+  StaticCamera_0 235330 232325 100

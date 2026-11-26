@@ -1,0 +1,19 @@
+[Info]
+<Name>
+Hawkinge Fire Response Range
+<Description>
+Offline flight-test scenario. Start airborne east of Hawkinge in a Bf 109 E-4/B. Use Custom and select the pilot icon for SC 50 or SC 250. The default fit carries SC 50s. Restart the mission before trying the other fit so both runs begin with a fresh fire crew and supply.
+
+Arm your bombs and aim at the tent group just northwest of Hawkinge airfield. The first recognised bomb that detonates within 65 m of the centre tent starts the exercise. Follow the smoke and the HUD messages. A British emergency column will drive to the range. When a pump stops within reach, allow time for hose setup and knockdown. Residual smoke may linger for around 95 seconds after knockdown.
+
+Use the external view to watch the smoke, or try the ground-object view to follow the column. The HUD shows the live exercise state. Both aircraft share the same target and weather. This is a test range rather than a recreation of a historical mission.
+[1]
+<Name>
+SC 50 | four light bombs
+<Description>
+Bf 109 E-4/B with the stock four-SC-50 rack. A recognised ground detonation near the tent group starts the response once. Circle back to watch the emergency column.
+[2]
+<Name>
+SC 250 | one heavy bomb
+<Description>
+Bf 109 E-4/B with the stock single-SC-250 rack. Use the same tent target. Allow longer for the pump to knock down the larger fire.

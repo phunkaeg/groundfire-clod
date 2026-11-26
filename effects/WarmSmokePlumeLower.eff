@@ -1,0 +1,31 @@
+[ClassInfo]
+ClassName TParticleSystemParams
+
+[General]
+Smoke0
+
+[Smoke0]
+Material            WarmSmokePlume.mma
+TexParams           8.0 8.0 24.0
+AnimRandomPhase     1.0
+Emissive            1.0
+Colors0             0.00 1.00 0.32 0.050 0.00
+Colors1             0.06 0.76 0.29 0.048 0.23
+Colors2             0.14 0.46 0.16 0.025 0.36
+Colors3             0.24 0.25 0.070 0.010 0.24
+Colors4             0.45 0.09 0.018 0.004 0.00
+Colors5             1.00 0.03 0.005 0.001 0.00
+Size                0.5 30.0 0.3
+SizeTable           0.0 1.0 0.15 2.0 0.25 6.5 0.5 12.5 0.9 30.0
+Speed               0.001 0.001
+RotSpeed            -5 5
+GasResist           0.1 0.1
+WindK               5.5
+Life                10.0 12.0 0.1
+Gravity             5.1
+GravityEnd          0.0 0.0 -0.5
+nParticles          120
+ParticlesPerSec     2.0
+DistMinMax          0.0 9000.0
+emitterSize         0.4 0.4 0.4
+NoCastShadow        1

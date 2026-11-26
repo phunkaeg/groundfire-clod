@@ -1,0 +1,152 @@
+[PARTS]
+  core.100
+  bob.100
+[MAIN]
+  MAP Land$English_Channel_1940
+  DespawnAfterLandingTimeout 600
+  BattleArea 25000 10000 300000 300000 50000
+  TIME 10.5
+  WeatherIndex 0
+  CloudsHeight 1000
+  BreezeActivity 10
+  ThermalActivity 10
+  player BoB_LW_KG76_II.100
+[GlobalWind_0]
+  Power 3.000 0.000 0.000
+  BottomBound 0.00
+  TopBound 1500.00
+  GustPower 0
+  GustAngle 45
+[splines]
+[AirGroups]
+  BoB_RAF_F_74Sqn_Early.01
+  BoB_LW_KG76_II.17
+  BoB_LW_JG77_I.21
+  BoB_RAF_F_611Sqn_Early.01
+[BoB_RAF_F_74Sqn_Early.01]
+  Flight0  C F G U N B
+  Class Aircraft.SpitfireMkIIa
+  CallSign 26
+  Fuel 70
+  Weapons 1
+  Skill0 1 0.74 0.84 0.63 0.84 0.84 0.74 0.74
+  Skill1 0.84 0.53 0.53 0.37 0.37 0.53 0.53 0.53
+  Skill2 0.79 0.26 0.26 0.16 0.16 0.26 0.37 0.26
+  Skill3 1 0.95 0.95 0.84 0.84 0.95 0.89 0.89
+  Skill4 1 0.74 0.84 0.63 0.84 0.84 0.74 0.74
+  Skill5 0.79 0.26 0.26 0.16 0.16 0.26 0.37 0.26
+  Aging0 37
+  Aging2 73
+  Aging5 100
+  Briefing 2
+  Serial0 L1372
+  Serial1 L1126
+  Serial2 L1452
+  Serial3 L1822
+  Serial4 L1326
+  Serial5 L1188
+[BoB_RAF_F_74Sqn_Early.01_Way]
+  AATTACK_FIGHTERS 157477.40 250143.63 2200.00 400.00 /Formation VIC3 /Spacing NEAR
+  AATTACK_FIGHTERS 156185.55 249083.05 2200.00 400.00 /Formation VIC3 /Spacing NEAR
+  AATTACK_FIGHTERS 171998.68 233090.45 2200.00 400.00 /Formation VIC3 /Spacing NEAR
+  NORMFLY 231203.18 238813.45 100.00 400.00 /Formation VIC3 /Spacing NEAR
+  LANDING 248300.00 258609.70 500.00 300.00 /Formation VIC3 /Spacing NEAR
+[BoB_LW_KG76_II.17]
+  Flight0  B N R
+  Flight1  Q L S
+  Flight2  U A O
+  Class Aircraft.Ju-88A-1
+  CallSign 20
+  BombSpacing 20
+  Fuel 73
+  Weapons 1 1 1 3 1 1
+  Skill0 1 0.74 0.84 0.63 0.84 0.84 0.74 0.74
+  Skill1 0.84 0.53 0.53 0.37 0.37 0.53 0.53 0.53
+  Skill2 0.79 0.26 0.26 0.16 0.16 0.26 0.37 0.26
+  Skill10 1 0.95 0.95 0.84 0.84 0.95 0.89 0.89
+  Skill11 1 0.74 0.84 0.63 0.84 0.84 0.74 0.74
+  Skill12 0.79 0.26 0.26 0.16 0.16 0.26 0.37 0.26
+  Skill20 1 0.74 0.84 0.63 0.84 0.84 0.74 0.74
+  Skill21 0.84 0.53 0.53 0.37 0.37 0.53 0.53 0.53
+  Skill22 0.79 0.26 0.26 0.16 0.16 0.26 0.37 0.26
+  Aging0 60
+  Aging2 40
+  Aging10 68
+  Aging11 20
+  Aging12 80
+  Aging20 10
+  Aging21 87
+  Briefing 5
+  Serial0 7383
+  Serial1 3602
+  Serial2 1552
+  Serial10 4211
+  Serial11 3655
+  Serial12 7654
+  Serial20 7555
+  Serial21 6872
+  Serial22 4853
+[BoB_LW_KG76_II.17_Way]
+  NORMFLY 156152.02 247245.06 2000.00 370.00 /Formation VIC3 /Spacing NEAR
+  NORMFLY 149400.00 274180.00 2000.00 370.00 /Formation VIC3 /Spacing NEAR
+  NORMFLY 196504.97 273624.62 2000.00 370.00 /Formation VIC3 /Spacing NEAR
+  NORMFLY 276483.07 254866.22 2000.00 370.00 /Formation VIC3 /Spacing NEAR
+  NORMFLY 313447.82 192362.39 2000.00 370.00 /Formation VIC3 /Spacing NEAR
+  LANDING 321634.09 101205.09 500.00 300.00 /Formation VIC3 /Spacing NEAR
+[BoB_LW_JG77_I.21]
+  Flight0  1 2 3 4
+  Class Aircraft.Bf-109E-3
+  CallSign 34
+  Fuel 100
+  Weapons 1 1
+  Skill 0.84 0.53 0.53 0.37 0.37 0.53 0.53 0.53
+  Briefing 4
+[BoB_LW_JG77_I.21_Way]
+  ESCORT 154944.00 245952.00 2500.00 400.00 /Formation FINGERFOUR /Spacing NEAR BoB_LW_KG76_II.17 0
+  NORMFLY 154752.00 275328.00 2500.00 400.00 /Formation FINGERFOUR /Spacing NEAR
+  NORMFLY 196608.00 275520.00 2500.00 400.00 /Formation FINGERFOUR /Spacing NEAR
+  NORMFLY 277824.00 255744.00 2500.00 400.00 /Formation FINGERFOUR /Spacing NEAR
+  NORMFLY 315264.00 191808.00 2500.00 400.00 /Formation FINGERFOUR /Spacing NEAR
+  LANDING 340608.00 178752.00 500.00 300.00 /Formation FINGERFOUR /Spacing NEAR
+[BoB_RAF_F_611Sqn_Early.01]
+  Flight0  1 2 3
+  Class Aircraft.HurricaneMkI_dH5-20
+  CallSign 4
+  Fuel 100
+  Weapons 1
+  Skill 0.84 0.53 0.53 0.37 0.37 0.53 0.53 0.53
+[BoB_RAF_F_611Sqn_Early.01_Way]
+  AATTACK_BOMBERS 155712.00 259776.00 2000.00 400.00 /Formation VIC3 /Spacing NEAR
+  AATTACK_BOMBERS 155712.00 252480.00 2000.00 400.00 /Formation VIC3 /Spacing NEAR
+  NORMFLY 171264.00 230976.00 2000.00 400.00 /Formation VIC3 /Spacing NEAR
+  LANDING 224832.00 228672.00 500.00 300.00 /Formation VIC3 /Spacing NEAR
+[CustomChiefs]
+[Stationary]
+  Static23 Stationary.Radar.EnglishRadar1 gb 78603.79 181122.39 40.00
+  Static4 Artillery.3_inch_20_CWT_QF_Mk_I gb 157030.06 247889.69 0.00 /timeout 0/radius_hide 0
+  Static3 Artillery.3_inch_20_CWT_QF_Mk_I gb 156738.08 248164.50 0.00 /timeout 0/radius_hide 0
+  Static2 Artillery.3_inch_20_CWT_QF_Mk_I gb 156102.55 252802.08 0.00 /timeout 0/radius_hide 0
+  Static0 Artillery.3_inch_20_CWT_QF_Mk_I gb 154453.64 253506.30 0.00 /timeout 0/radius_hide 0
+  Static1 Artillery.3_inch_20_CWT_QF_Mk_I gb 154814.34 254485.34 0.00 /timeout 0/radius_hide 0
+  Static7 Artillery.3_inch_20_CWT_QF_Mk_I gb 156514.78 259861.50 0.00 /timeout 0/radius_hide 0
+  Static5 Artillery.3_inch_20_CWT_QF_Mk_I gb 156274.31 260170.67 0.00 /timeout 0/radius_hide 0
+  Static6 Artillery.3_inch_20_CWT_QF_Mk_I gb 156566.31 260376.78 0.00 /timeout 0/radius_hide 0
+  Static10 Artillery.3_inch_20_CWT_QF_Mk_I gb 155106.33 265856.00 0.00 /timeout 0/radius_hide 0
+  Static8 Artillery.3_inch_20_CWT_QF_Mk_I gb 154779.98 266044.94 0.00 /timeout 0/radius_hide 0
+  Static9 Artillery.3_inch_20_CWT_QF_Mk_I gb 155192.22 266165.16 0.00 /timeout 0/radius_hide 0
+  Static22 ShipUnit.Tanker_Medium1 gb 156924.02 273597.34 0.00 /sleep 0/skill 2/slowfire 1
+  Static18 ShipUnit.Tanker_Medium1 gb 156283.48 273604.13 0.00 /sleep 0/skill 2/slowfire 1
+  Static20 ShipUnit.Tanker_Medium1 gb 156602.91 273600.75 0.00 /sleep 0/skill 2/slowfire 1
+  Static21 ShipUnit.Tanker_Medium1 gb 156922.33 273661.59 0.00 /sleep 0/skill 2/slowfire 1
+  Static17 ShipUnit.Tanker_Medium1 gb 156285.19 273668.34 0.00 /sleep 0/skill 2/slowfire 1
+  Static19 ShipUnit.Tanker_Medium1 gb 156596.16 273664.97 0.00 /sleep 0/skill 2/slowfire 1
+  Static14 Artillery.3_inch_20_CWT_QF_Mk_I gb 156339.27 273779.88 0.00 /timeout 0/radius_hide 0
+  Static16 Artillery.3_inch_20_CWT_QF_Mk_I gb 156430.53 273766.38 0.00 /timeout 0/radius_hide 0
+  Static15 Artillery.3_inch_20_CWT_QF_Mk_I gb 156405.17 273803.53 0.00 /timeout 0/radius_hide 0
+  Static13 Artillery.3_inch_20_CWT_QF_Mk_I gb 167352.97 273894.47 0.00 /timeout 0/radius_hide 0
+  Static11 Artillery.3_inch_20_CWT_QF_Mk_I gb 167043.80 274100.56 0.00 /timeout 0/radius_hide 0
+  Static12 Artillery.3_inch_20_CWT_QF_Mk_I gb 167335.80 274323.88 0.00 /timeout 0/radius_hide 0
+[Buildings]
+[BuildingsLinks]
+[StaticCamera]
+  StaticCamera_0 148688 275392 390 306 22 0 0

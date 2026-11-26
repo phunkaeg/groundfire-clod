@@ -1,0 +1,9 @@
+[Common]
+  Painter             ParticleAdd_Emmisive
+  DiffuseTexture      @asis ParticleDefault Smoke_Sprites_Air_W.dds
+  multiplyer          0.0 1.6
+  alphaTestGE         0.01
+  $nocastshadow
+  $transparent        0.5
+  $sort
+  $trilist

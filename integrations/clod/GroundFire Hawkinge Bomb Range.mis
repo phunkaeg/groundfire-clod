@@ -1,0 +1,55 @@
+[PARTS]
+  core.100
+  bob.100
+[MAIN]
+  MAP Land$English_Channel_1940
+  TIME 10
+  WeatherIndex 3
+  player BoB_LW_ErprGr210F.310
+[GlobalWind_0]
+  Power 2.000 0.000 0.000
+  BottomBound 0.00
+  TopBound 1500.00
+  GustPower 0
+  GustAngle 45
+[AirGroups]
+  BoB_LW_ErprGr210F.32
+  BoB_LW_JG54_III.34
+[BoB_LW_ErprGr210F.32]
+  Flight1 5
+  Class Aircraft.Bf-109E-4B
+  Formation FINGERFOUR
+  CallSign 31
+  Fuel 45
+  Weapons 1 1 2
+  Detonator Bomb.SC-50_GradeII_J 1 -1 0
+  Skill 1 0.95 1 1 1 1 1 1
+  Briefing 1
+[BoB_LW_ErprGr210F.32_Way]
+  NORMFLY 238000.00 232745.00 750.00 315.00
+  NORMFLY 233400.00 232745.00 750.00 315.00
+  NORMFLY 233400.00 234200.00 750.00 315.00
+  NORMFLY 236000.00 234200.00 750.00 315.00
+[BoB_LW_JG54_III.34]
+  Flight1 1
+  Class Aircraft.Bf-109E-4B
+  Formation FINGERFOUR
+  CallSign 25
+  Fuel 45
+  Weapons 1 1 3
+  Detonator Bomb.SC-250_Type1_J 2 -1 0
+  Skill 1 0.95 1 1 1 1 1 1
+  Briefing 2
+[BoB_LW_JG54_III.34_Way]
+  NORMFLY 238350.00 232980.00 750.00 315.00
+  NORMFLY 233400.00 232695.00 750.00 315.00
+  NORMFLY 233400.00 231300.00 750.00 315.00
+  NORMFLY 236000.00 231300.00 750.00 315.00
+[Stationary]
+  Static7101 Stationary.Environment.TentBell_UK1 gb 234503.00 232745.00 90.00
+  Static7102 Stationary.Environment.TentBell_UK1 gb 234475.00 232770.00 90.00
+  Static7103 Stationary.Environment.TentBell_UK1 gb 234531.00 232770.00 90.00
+  Static7104 Stationary.Environment.TentBell_UK1 gb 234475.00 232720.00 90.00
+  Static7105 Stationary.Environment.TentBell_UK1 gb 234531.00 232720.00 90.00
+[StaticCamera]
+  StaticCamera_0 234439 232685 55
