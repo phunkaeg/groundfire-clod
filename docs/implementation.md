@@ -12,6 +12,10 @@ The authored [material](../effects/WarmSmokePlume.mma) selects the existing **Pa
 
 The installer reads **Smoke_Sprites_Air_W.dds** from the local game's core archive for the optional night setup. It copies this atlas to the user profile.
 
+## Sunset and sunrise
+
+The lighting-enabled London missions use CloD's mission clock, the mission date, and the Channel map's configured latitude, longitude and time zone. Added point lights and warm smoke start at calculated sunset, ramp up as the sun drops, and fade out by calculated sunrise. Base smoke and flame effects render independently. The clock follows mission acceleration and advances the date at midnight. The gate uses estimated solar elevation, so the native renderer's apparent horizon may differ slightly. [NOAA solar position method](https://gml.noaa.gov/grad/solcalc/solareqns.PDF)
+
 ## Street planning
 
 The [survey tool](../tools/road-survey/) samples **gpLandType** at 5 m intervals and also probes the game's ground pathfinder. Its road flags exposed local streets that were missing from the extracted road mesh. Direct **gpFindPath** results led through city blocks on the original approaches.

@@ -1,0 +1,24 @@
+{
+  "wind_m_s": [8, 0],
+  "sites": [
+    {
+      "name": "Hawkinge",
+      "aim_xy": [229316, 237504],
+      "camera": [229376, 237504, 840, 90, 82],
+      "approach_m": 4900,
+      "seam_east_m": 229376
+    },
+    {
+      "name": "Tangmere",
+      "aim_xy": [101272, 201786],
+      "camera": [101272, 201786, 870, 90, 78],
+      "approach_m": 5700
+    },
+    {
+      "name": "Calais",
+      "aim_xy": [290276, 217506],
+      "camera": [290276, 217506, 840, 90, 82],
+      "approach_m": 6500
+    }
+  ]
+}

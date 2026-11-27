@@ -12,7 +12,7 @@ public partial class Mission
 
     private void ReconcileDistrictLights(Dictionary<string, Tuple<int, double, double>> desired)
     {
-        bool clear = stopped || Now - receivedAt > 15;
+        bool clear = fireNightFactor <= 0 || stopped || Now - receivedAt > 15;
         foreach (string id in new List<string>(cityLights.Keys))
         {
             CityLight light = cityLights[id];

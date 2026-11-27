@@ -1,6 +1,6 @@
 [project]
 name = "groundfire-clod"
-version = "0.1.0"
+version = "0.2.0"
 description = "Offline ground-fire simulation and mission integration for IL-2 Cliffs of Dover"
 requires-python = ">=3.11"
 dependencies = []

@@ -60,6 +60,7 @@ public partial class Mission
         double colorHeat = Math.Sqrt(strength) * (0.72 + 0.28 * Math.Sin(seconds * 2.4 + phase));
         intensity = (float)((0.35 + 4.10 * strength) * pulse);
 #endif
+        intensity *= (float)fireNightFactor;
         green = (float)(0.18 + 0.36 * colorHeat);
         var color = new Tuple3f(1f, green, (float)(0.045 + 0.18 * colorHeat));
         light.setColor(ref color);
@@ -68,6 +69,8 @@ public partial class Mission
 
     private void PulseCityLights()
     {
+        if (fireNightFactor <= 0)
+            return;
 #if LONDON_WARM_SMOKE
         if (warmSmokeHeld)
             return;
@@ -142,7 +145,7 @@ public partial class Mission
 
     private void TryLightCityFire(string id, int plot, object effect, Point3d anchor)
     {
-        if (cityLightFailed || Plots[plot] != "town" || cityLights.Count >= CityLightBudget)
+        if (fireNightFactor <= 0 || cityLightFailed || Plots[plot] != "town" || cityLights.Count >= CityLightBudget)
             return;
 
         foreach (CityLight other in cityLights.Values)
@@ -178,7 +181,7 @@ public partial class Mission
 #else
             var color = new Tuple3f(1f, 0.48f, 0.20f);
             light.setColor(ref color);
-            setOwnedEmission.Invoke(light, new object[] { CityLightIntensity, CityLightRadius });
+            setOwnedEmission.Invoke(light, new object[] { (float)(CityLightIntensity * fireNightFactor), CityLightRadius });
 #endif
             // The effect submits the light each frame and disposes it with the draw owner.
             attachLight.Invoke(draw, new object[] { "GroundFireCity", light });
@@ -195,6 +198,33 @@ public partial class Mission
             Note("city_light_error " + error.GetBaseException().Message);
         }
     }
+
+#if !LONDON_DISTRICT_LIGHTS
+    private void ReconcileAttachedCityLights(Dictionary<string, Tuple<int, double, double>> desired)
+    {
+        if (fireNightFactor <= 0 || cityLightFailed)
+            return;
+#if !LONDON_PULSING_LIGHTS
+        foreach (CityLight light in cityLights.Values)
+            if (particle.GetValue(light.Owner) != null)
+                setOwnedEmission.Invoke(light.Light, new object[] {
+                    (float)(CityLightIntensity * fireNightFactor), CityLightRadius });
+#endif
+        foreach (var point in desired)
+        {
+            object effect;
+            if (cityLights.Count >= CityLightBudget)
+                break;
+            if (point.Key.Contains("_P2_") || cityLights.ContainsKey(point.Key) ||
+                !effects.TryGetValue(point.Key, out effect))
+                continue;
+            var p = point.Value;
+            double? ground = CaptureTerrainHeight(p.Item2, p.Item3);
+            if (ground.HasValue)
+                TryLightCityFire(point.Key, p.Item1, effect, new Point3d(p.Item2, p.Item3, ground.Value));
+        }
+    }
+#endif
 
     private void ObserveCityLights()
     {

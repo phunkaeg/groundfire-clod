@@ -3,9 +3,9 @@
 GroundFire London Night Glow
 <Description>
 Start the matching Fire Lab Bridge. Use A for autopilot. The raised harbour camera is selected shortly after the mission starts. This mission retains the London Attack bomber formation, loadouts and route. The spread model starts from compatible ground impacts recorded by the game.
-The mission starts at 22:20. Active city fires light nearby scenery with independently pulsing red and orange light.
+The mission starts at 22:20. After sunset, active city fires light nearby scenery with independently pulsing red and orange light.
 City pump crews dispatch after a fire starts. They set up and apply water once stopped within hose reach.
 Flame effects follow burning cells, while separate smoke plumes follow areas producing the most smoke.
-Larger flames share the scene with steady, softly flickering district lights.
-Smoke glow builds gradually, reaching higher as the fire intensifies.
+After sunset, larger flames share the scene with softly flickering district lights.
+After sunset, smoke glow builds gradually, reaching higher as the fire intensifies.
 Up to eight separated ground impacts seed fires. Flame scale follows the local burn intensity.

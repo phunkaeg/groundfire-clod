@@ -25,7 +25,7 @@ public partial class Mission
 
     private void ReconcileWarmSmoke(Dictionary<string, Tuple<int, double, double>> desired, float smokeScale)
     {
-        if (warmSmokeFailed)
+        if (warmSmokeFailed || fireNightFactor <= 0)
             return;
         try
         {
@@ -98,7 +98,7 @@ public partial class Mission
                     continue;
                 }
 
-                double brightness = Math.Pow(plume.Glow, 1.35);
+                double brightness = fireNightFactor * Math.Pow(plume.Glow, 1.35);
                 BlendWarmSmoke(plume, smokeScale, brightness);
                 SetLowerSmokeRate(source.Key, new[] { (float)(StockLowerSmokeRate[0] * (1 - brightness)) });
                 if (now - plume.LastLoggedAt >= 4)
@@ -119,8 +119,18 @@ public partial class Mission
     private void FinishWarmPlume(string id)
     {
         foreach (object owner in warmSmoke[id].Owners)
-            if (owner != null && particle.GetValue(owner) != null)
-                finishEffect.Invoke(null, new[] { owner });
+        {
+            var emitter = owner == null ? null : (WEff3D)particle.GetValue(owner);
+            if (emitter == null)
+                continue;
+            if (fireNightFactor <= 0)
+            {
+                emitter.setIntesity(0);
+                if (emitter.isPaused())
+                    emitter.pause(false);
+            }
+            finishEffect.Invoke(null, new[] { owner });
+        }
         warmSmoke.Remove(id);
         SetLowerSmokeRate(id, StockLowerSmokeRate);
         Note("warm_smoke_off " + id);

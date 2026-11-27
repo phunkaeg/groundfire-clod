@@ -276,6 +276,7 @@ public partial class Mission : AMission
         pollAt = now + 0.5;
         try
         {
+            RefreshFireLighting(now);
             Player player = GamePlay.gpPlayer();
             if (menuPlayer == null)
                 InstallMenu(player);
@@ -558,6 +559,7 @@ public partial class Mission
         double colorHeat = Math.Sqrt(strength) * (0.72 + 0.28 * Math.Sin(seconds * 2.4 + phase));
         intensity = (float)((0.35 + 4.10 * strength) * pulse);
 #endif
+        intensity *= (float)fireNightFactor;
         green = (float)(0.18 + 0.36 * colorHeat);
         var color = new Tuple3f(1f, green, (float)(0.045 + 0.18 * colorHeat));
         light.setColor(ref color);
@@ -566,6 +568,8 @@ public partial class Mission
 
     private void PulseCityLights()
     {
+        if (fireNightFactor <= 0)
+            return;
 #if LONDON_WARM_SMOKE
         if (warmSmokeHeld)
             return;
@@ -640,7 +644,7 @@ public partial class Mission
 
     private void TryLightCityFire(string id, int plot, object effect, Point3d anchor)
     {
-        if (cityLightFailed || Plots[plot] != "town" || cityLights.Count >= CityLightBudget)
+        if (fireNightFactor <= 0 || cityLightFailed || Plots[plot] != "town" || cityLights.Count >= CityLightBudget)
             return;
 
         foreach (CityLight other in cityLights.Values)
@@ -676,7 +680,7 @@ public partial class Mission
 #else
             var color = new Tuple3f(1f, 0.48f, 0.20f);
             light.setColor(ref color);
-            setOwnedEmission.Invoke(light, new object[] { CityLightIntensity, CityLightRadius });
+            setOwnedEmission.Invoke(light, new object[] { (float)(CityLightIntensity * fireNightFactor), CityLightRadius });
 #endif
             // The effect submits the light each frame and disposes it with the draw owner.
             attachLight.Invoke(draw, new object[] { "GroundFireCity", light });
@@ -693,6 +697,33 @@ public partial class Mission
             Note("city_light_error " + error.GetBaseException().Message);
         }
     }
+
+#if !LONDON_DISTRICT_LIGHTS
+    private void ReconcileAttachedCityLights(Dictionary<string, Tuple<int, double, double>> desired)
+    {
+        if (fireNightFactor <= 0 || cityLightFailed)
+            return;
+#if !LONDON_PULSING_LIGHTS
+        foreach (CityLight light in cityLights.Values)
+            if (particle.GetValue(light.Owner) != null)
+                setOwnedEmission.Invoke(light.Light, new object[] {
+                    (float)(CityLightIntensity * fireNightFactor), CityLightRadius });
+#endif
+        foreach (var point in desired)
+        {
+            object effect;
+            if (cityLights.Count >= CityLightBudget)
+                break;
+            if (point.Key.Contains("_P2_") || cityLights.ContainsKey(point.Key) ||
+                !effects.TryGetValue(point.Key, out effect))
+                continue;
+            var p = point.Value;
+            double? ground = CaptureTerrainHeight(p.Item2, p.Item3);
+            if (ground.HasValue)
+                TryLightCityFire(point.Key, p.Item1, effect, new Point3d(p.Item2, p.Item3, ground.Value));
+        }
+    }
+#endif
 
     private void ObserveCityLights()
     {
@@ -762,7 +793,7 @@ public partial class Mission
 
     private void ReconcileDistrictLights(Dictionary<string, Tuple<int, double, double>> desired)
     {
-        bool clear = stopped || Now - receivedAt > 15;
+        bool clear = fireNightFactor <= 0 || stopped || Now - receivedAt > 15;
         foreach (string id in new List<string>(cityLights.Keys))
         {
             CityLight light = cityLights[id];
@@ -1003,5 +1034,71 @@ public partial class Mission
             Record(String.Format(Invariant, "city_crew_position\t{0}\t{1:R}\t{2:R}\t{3}",
                 i + 1, p.x, p.y, stopped ? 1 : 0));
         }
+    }
+}
+
+public partial class Mission
+{
+    private static readonly DateTime FireLightingDate = new DateTime(1940, 7, 15);
+    private const double FireLightingStart = 10.5;
+    private const double FireLightingLatitude = 51.5, FireLightingLongitude = 0, FireLightingUtcOffset = 0;
+    private double fireNightFactor;
+
+    private void RefreshFireLighting(double now)
+    {
+        int days = (int)Math.Floor((FireLightingStart + Math.Max(0, now) / 3600) / 24);
+        double previous = fireNightFactor;
+        fireNightFactor = FireSunlight.NightFactor(FireLightingDate.AddDays(days), GamePlay.gpTimeofDay(),
+            FireLightingLatitude, FireLightingLongitude, FireLightingUtcOffset);
+        if ((previous > 0) != (fireNightFactor > 0))
+            Note(String.Format(Invariant, "fire_night_visuals {0} {1:F6}", fireNightFactor > 0 ? "on" : "off", now));
+        if (fireNightFactor > 0)
+            return;
+
+#if LONDON_DISTRICT_LIGHTS
+        foreach (string id in new List<string>(cityLights.Keys))
+            RemoveDistrictLight(id);
+#else
+        if (previous > 0)
+            foreach (CityLight light in cityLights.Values)
+                if (particle.GetValue(light.Owner) != null)
+                    setOwnedEmission.Invoke(light.Light, new object[] { 0f, 0f });
+#endif
+#if LONDON_WARM_SMOKE
+        foreach (string id in new List<string>(warmSmoke.Keys))
+            FinishWarmPlume(id);
+#endif
+    }
+}
+
+// Solar approximation from NOAA's General Solar Position Calculations.
+internal static class FireSunlight
+{
+    private const double Radians = Math.PI / 180;
+    private const double SunsetElevation = -0.833;
+    private const double FullGlowElevation = -4.0;
+
+    public static double NightFactor(DateTime date, double hour, double latitude,
+                                     double longitude, double utcOffset)
+    {
+        if (Double.IsNaN(hour) || Double.IsInfinity(hour) || hour < 0 || hour >= 24)
+            return 0;
+
+        double year = 2 * Math.PI / (DateTime.IsLeapYear(date.Year) ? 366 : 365)
+            * (date.DayOfYear - 1 + (hour - 12) / 24);
+        double sin = Math.Sin(year), cos = Math.Cos(year);
+        double sin2 = Math.Sin(2 * year), cos2 = Math.Cos(2 * year);
+        double equation = 229.18 * (0.000075 + 0.001868 * cos - 0.032077 * sin
+            - 0.014615 * cos2 - 0.040849 * sin2);
+        double declination = 0.006918 - 0.399912 * cos + 0.070257 * sin
+            - 0.006758 * cos2 + 0.000907 * sin2
+            - 0.002697 * Math.Cos(3 * year) + 0.00148 * Math.Sin(3 * year);
+        double angle = (15 * (hour - utcOffset) + longitude + equation / 4 - 180) * Radians;
+        double lat = latitude * Radians;
+        double sinElevation = Math.Sin(lat) * Math.Sin(declination)
+            + Math.Cos(lat) * Math.Cos(declination) * Math.Cos(angle);
+        double elevation = Math.Asin(Math.Max(-1, Math.Min(1, sinElevation))) / Radians;
+        double fade = (SunsetElevation - elevation) / (SunsetElevation - FullGlowElevation);
+        return Math.Max(0, Math.Min(1, fade));
     }
 }

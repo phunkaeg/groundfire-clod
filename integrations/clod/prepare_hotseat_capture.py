@@ -12,6 +12,7 @@ from fire_lab import (FRONT_BUDGET, LONDON_ATTACK_CENTER, LONDON_CITY_RAID_CENTE
                       DENSE_FLAME_BUDGET, DISTRICT_LIGHT_BUDGET, SPLIT_FLAME_BUDGET, SPLIT_SMOKE_BUDGET,
                       WOOD_EDGE_CENTER, WOOD_EDGE_ROAD, WoodlandTerrain, london_ignitions)
 from prepare_fire_lab import NAME as LAB_NAME, mission_variants, write_files
+from sunset_lighting import append_fire_sunlight
 
 NAME = "GroundFire Hawkinge Wind Capture"
 DESTINATION = OUT / "hotseat-capture"
@@ -474,6 +475,11 @@ def prepare(terrain=None, steam=False, large_fire=False, wind="east", front_fx=F
     if warm_lights:
         hooks = (
             ("public class Mission : AMission", "public partial class Mission : AMission"),
+            ("            Player player = GamePlay.gpPlayer();",
+             "            RefreshFireLighting(now);\n            Player player = GamePlay.gpPlayer();"),
+            ("                Apply(desired);",
+             "                Apply(desired);\n#if !LONDON_DISTRICT_LIGHTS\n"
+             "                ReconcileAttachedCityLights(desired);\n#endif"),
             ("            ReadFrame(now);", "            ReadFrame(now);\n            ObserveCityLights();"),
             ("                finishEffect.Invoke(null, new[] { actor });",
              "                EndCityLight(id);\n                finishEffect.Invoke(null, new[] { actor });"),
@@ -820,7 +826,7 @@ Start the matching Fire Lab Bridge. Use A for autopilot. The raised harbour came
 """
         if night_raid:
             start_time = "10:30" if daylight else "06:05" if morning else "20:15" if dusk else "22:20"
-            brief += f"The mission starts at {start_time}. Active dock fires light nearby scenery with independently pulsing red and orange light.\n"
+            brief += f"The mission starts at {start_time}. After sunset, active dock fires light nearby scenery with pulsing red and orange light.\n"
         if city_raid:
             brief = brief.replace("the raised harbour camera", "the raised city camera").replace("dock fires", "city fires")
         if city_routes:
@@ -830,11 +836,13 @@ Start the matching Fire Lab Bridge. Use A for autopilot. The raised harbour came
         if split_fx:
             brief += "Flame effects follow burning cells, while separate smoke plumes follow areas producing the most smoke.\n"
         if dense_fx:
-            brief += "Larger flames share the scene with steady, softly flickering district lights.\n"
+            brief += "Larger flames share the scene with softly flickering district lights after sunset.\n"
         if warm_smoke:
-            brief += "Smoke glow builds gradually, reaching higher as the fire intensifies.\n"
+            brief += "After sunset, smoke glow builds gradually and reaches higher as the fire intensifies.\n"
         if isolated_fires:
             brief += "Up to eight separated ground impacts seed fires. Flame scale follows the local burn intensity.\n"
+    if warm_lights:
+        source = append_fire_sunlight(source, mission)
     files = {f"{name}.{suffix}": value.encode("utf-8")
              for suffix, value in (("cs", source), ("mis", mission), ("briefing", brief))}
     destination = DESTINATION
