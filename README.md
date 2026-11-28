@@ -7,6 +7,7 @@ GroundFire adds spreading ground fires and a fire crew response to prepared offl
 - [Daylight showcase with the synchronized fire map](https://github.com/phunkaeg/groundfire-clod/releases/download/v0.1.0/london-fire-response-four-truck-showcase-with-map.mp4)
 - [Live truck camera from the matched-impact trial](https://github.com/phunkaeg/groundfire-clod/releases/download/v0.1.0/london-matched-live-pump.mp4)
 - [Night raid and emissive smoke](https://github.com/phunkaeg/groundfire-clod/releases/download/v0.1.0/london-adaptive-actual-raid-replay.mp4)
+- [London sunset fade-in from the fixed camera](https://github.com/phunkaeg/groundfire-clod/releases/download/v0.2.0/london-sunset-fire-glow.mp4)
 - [Live Channel trial with synchronized fire maps](https://github.com/phunkaeg/groundfire-clod/releases/download/v0.2.0/channel-three-site-live.mp4)
 
 The showcase insets were reconstructed from the original run's truck positions. The matched-trial clip follows the live CloD truck at normal game speed.
@@ -43,6 +44,8 @@ powershell -NoProfile -ExecutionPolicy Bypass -File .\Install.ps1 -Night -GameDi
 Use **Launch Night Bridge.cmd** for **GroundFire London Night Glow**. The installer obtains the smoke-sprite atlas from your local game archive. An already exported copy can be supplied with **-SmokeAtlas**. The package carries the custom effects and material definitions.
 
 Added district lights and orange smoke glow fade in after calculated sunset and fade out by sunrise. The gate uses the mission clock and date and leaves the normal flame and smoke effects visible through the day.
+
+The sunset fade-in was verified in-game from a fixed camera on the London mission. Ordinary flames and dark smoke were visible before sunset. At about **20:11:33 mission time**, the added lights and warm smoke began to appear over the existing fires, reaching full strength around **20:38**. This controlled capture used scripted ignitions, a fire clock at one-fifth mission speed, and crew response disabled.
 
 ## Channel three-site trial
 
